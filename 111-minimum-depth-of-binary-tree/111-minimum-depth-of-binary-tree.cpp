@@ -11,18 +11,28 @@
  */
 
 // Edge Case= n-ary trees
-// DFS Solution
+// BFS Solution
 class Solution {
 public:
     int minDepth(TreeNode* root) {
-        if (root == NULL) 
-            return 0;
-        if (root->left == NULL && root->right == NULL)
-            return 1; 
-        if (root->left == NULL) 
-            return minDepth(root->right) + 1;
-        if (root->right == NULL) 
-            return minDepth(root->left) + 1;
-        return min(minDepth(root->left), minDepth(root->right)) + 1;
+        if(root==NULL) return 0;
+        queue<TreeNode*> q;
+        q.push(root);
+        int ans=1;
+        while(!q.empty())
+        {
+            int sz=q.size();
+            while(sz>0)
+            {
+                TreeNode* rt = q.front();
+                q.pop();
+                if(rt->left==NULL && rt->right==NULL) return ans;
+                if(rt->left!=NULL) q.push(rt->left);
+                if(rt->right!=NULL) q.push(rt->right);
+                sz--;
+            }
+            ans++; 
+        }
+        return ans;
     }
 };
