@@ -9,30 +9,13 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-// Edge Case= n-ary trees
-// BFS Solution
 class Solution {
 public:
-    int minDepth(TreeNode* root) {
-        if(root==NULL) return 0;
-        queue<TreeNode*> q;
-        q.push(root);
-        int ans=1;
-        while(!q.empty())
-        {
-            int sz=q.size();
-            while(sz>0)
-            {
-                TreeNode* rt = q.front();
-                q.pop();
-                if(rt->left==NULL && rt->right==NULL) return ans;
-                if(rt->left!=NULL) q.push(rt->left);
-                if(rt->right!=NULL) q.push(rt->right);
-                sz--;
-            }
-            ans++; 
-        }
-        return ans;
+    int maxDepth(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        int rd=maxDepth(root->right);
+        int ld=maxDepth(root->left);
+        return 1+max(rd,ld);
     }
 };
